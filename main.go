@@ -33,7 +33,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, "  -inputFilePath	string    ykv文件地址，默认读取：./video.ykv")
 		fmt.Fprintln(os.Stderr, "  -filelistPath		string    切片文件地址输出路径，默认：./filelist.txt")
 		fmt.Fprintln(os.Stderr, "  -mergedOutputPath	string    合并后的文件输出路径，默认：./merged_output.mp4")
-		fmt.Fprintln(os.Stderr, "  -ffmpegBinPath	string    ffmpeg的bin目录地址，不传改参数则不会执行文件合并，注意'/'必须使用转移'//'")
+		fmt.Fprintln(os.Stderr, "  -ffmpegBinPath	string    ffmpeg的bin目录地址，不传该参数则不会执行文件合并，注意'/'必须使用转移'//'")
 	}
 
 	// 解析命令行参数
