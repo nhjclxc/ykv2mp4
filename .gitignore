@@ -63,3 +63,6 @@ pkg/mod/
 *.ipr
 
 
+*.ykv
+*.mp4
+

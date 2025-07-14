@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"flag"
 	"fmt"
@@ -105,6 +106,12 @@ func main() {
 	// 5、执行FFmpeg命令合并分片mp4数据
 	mergeMultMp4(mp4Files, listFile.Name(), *mergedOutputPath, *ffmpegBinPath)
 
+	fmt.Println("程序执行完毕，按 Enter 键退出...")
+
+	// 强制阻塞读取控制台输入
+	reader := bufio.NewReader(os.Stdin)
+	_, _ = reader.ReadString('\n')
+
 }
 
 // 读取每一个视频分片
@@ -136,11 +143,11 @@ func mergeMultMp4(mp4Files [][]byte, listFileName string, outputFile string, ffm
 
 	// 检测是否有mp4文件
 	if len(mp4Files) == 0 {
-		log.Fatalf("当前目录未找到任何 *.mp4 数据")
+		log.Printf("当前目录未找到任何 *.mp4 数据")
 		return
 	}
 	if ffmpegBinPath == "" {
-		log.Fatalf("未读取到ffmpeg的bin目录地址，ffmpegBinPath = %s，无法执行文件合并操作！！！", ffmpegBinPath)
+		log.Printf("未读取到ffmpeg的bin目录地址，ffmpegBinPath = %s，无法执行文件合并操作！！！\n", ffmpegBinPath)
 		return
 	}
 
@@ -155,7 +162,7 @@ func mergeMultMp4(mp4Files [][]byte, listFileName string, outputFile string, ffm
 	fmt.Println("开始执行 ffmpeg 合并视频，请稍候...")
 	err := cmd.Run()
 	if err != nil {
-		log.Fatalf("ffmpeg 执行失败: %v", err)
+		log.Printf("ffmpeg 执行失败: %v", err)
 	}
 
 	fmt.Printf("合并完成，输出文件：%s\n", outputFile)

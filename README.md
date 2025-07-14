@@ -46,6 +46,14 @@ ykv转码mp4
 ![img_3.png](img_3.png)
 
 
+# 2.3 使用可执行文件ykv2mp4.exe
+
+考虑到很多朋友没有编码能力，因此我编译了一个可执行文件 **ykv2mp4.exe** 使得大家使用起来更佳方便，该 exe 仅2.76MB。
+
+![img_4.png](img_4.png)
+
+![img_5.png](img_5.png)
+
 
 # 三、源码版权声明
 
