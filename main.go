@@ -106,12 +106,44 @@ func main() {
 	// 5、执行FFmpeg命令合并分片mp4数据
 	mergeMultMp4(mp4Files, listFile.Name(), *mergedOutputPath, *ffmpegBinPath)
 
+	PrintLicenseNotice()
+
 	fmt.Println("程序执行完毕，按 Enter 键退出...")
 
 	// 强制阻塞读取控制台输入
 	reader := bufio.NewReader(os.Stdin)
 	_, _ = reader.ReadString('\n')
 
+}
+
+// PrintLicenseNotice 打印源码版权声明到控制台
+func PrintLicenseNotice() {
+	const (
+		Bold    = "\033[1m"
+		Red     = "\033[31m"
+		BoldRed = "\033[1;31m"
+		Reset   = "\033[0m"
+	)
+	fmt.Println("\n\n\n")
+
+	fmt.Println(BoldRed + "📜 源码版权声明\n" + Reset)
+
+	fmt.Println(BoldRed + "1. 本项目部分源代码由 ChatGPT 协助生成，作者对其进行了修改与整理。" + Reset)
+
+	fmt.Println(BoldRed + "2. 据作者所知，截止当前（2025 年 7 月 13 日 12:30），GitHub 上尚无公开的关于 YKV 转码为 MP4 的完整 Golang 语言的开源实现。因此，欢迎学习与参考，但请注明项目来源 [github.com/nhjclxc/ykv2mp4](https://github.com/nhjclxc/ykv2mp4)，尊重原创。" + Reset)
+
+	fmt.Println(BoldRed + "3. 本项目的源代码以 源代码开放（source-available） 形式发布，并遵循 Apache License 2.0 的大部分条款，但附加以下限制条款，对使用方式作出如下限制：" + Reset)
+	fmt.Println(BoldRed + "   - 禁止将本项目全部或部分用于任何形式的直接或间接获利行为，包括但不限于：收费软件、订阅服务、SaaS 平台、广告变现、嵌入商业产品等。" + Reset)
+	fmt.Println(BoldRed + "   - 如需用于商业用途或获取收益的场景，须事先取得作者书面授权。" + Reset)
+
+	fmt.Println(BoldRed + "4. 本项目允许用于学习、研究、教学或个人非商业用途，前提是保留原始作者署名与此声明。\n" + Reset)
+
+	fmt.Println(BoldRed + "📄 许可协议\n" + Reset)
+
+	fmt.Println(BoldRed + "本项目以源代码开放（source-available）形式发布，基于 Apache License 2.0，并附加“禁止商用获利”限制条款。" + Reset)
+	fmt.Println(BoldRed + "具体内容详见 LICENSE 文件。" + Reset)
+
+	fmt.Println("\n\n\n")
 }
 
 // 读取每一个视频分片
