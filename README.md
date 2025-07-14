@@ -9,7 +9,7 @@ ykv转码mp4
 # 使用golang和ffmpeg实现优酷ykv视频解码为mp4
 
 
-# 一、环境准备
+# 一、环境准备【没有编码能力的朋友直接看2.3节相关内容】
 
 ## 1.1、golang环境
 
@@ -22,6 +22,9 @@ ykv转码mp4
 - 下载地址：[官网](https://www.gyan.dev/ffmpeg/builds/)或者[github](https://github.com/GyanD/codexffmpeg/releases/tag/2025-07-10-git-82aeee3c19)找到ffmpeg-2025-07-10-git-82aeee3c19-essentials_build.7z之后解压到指定路径
 - **若不使用视频合并功能，可不安装**
 
+## 1.3、源码构建命令
+- 在当前目录下进入cmd命令窗口，执行：`go build -o ykv2mp4.exe main.go`
+- 稍等片刻即生产可执行文件
 
 
 # 二、脚本执行
@@ -46,11 +49,14 @@ ykv转码mp4
 ![img_3.png](img_3.png)
 
 
-# 2.3 使用可执行文件ykv2mp4.exe
+# 2.3 使用可执行文件ykv2mp4.exe进行转码
 
 考虑到很多朋友没有编码能力，因此我编译了一个可执行文件 **ykv2mp4.exe** 使得大家使用起来更佳方便，该 exe 仅2.76MB。
 
+
 ![img_4.png](img_4.png)
+
+在cmd下执行：`ykv2mp4.exe -ffmpegBinPath=D:\\develop\\ffmpeg-2025-07-10-git-82aeee3c19-essentials_build\\ffmpeg-2025-07-10-git-82aeee3c19-essentials_build\\bin`
 
 ![img_5.png](img_5.png)
 

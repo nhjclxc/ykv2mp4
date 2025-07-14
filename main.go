@@ -52,13 +52,16 @@ func main() {
 	//data, err := os.ReadFile(inputFilePath)
 	data, err := os.ReadFile(*inputFilePath)
 	if err != nil {
-		panic(err)
+		fmt.Println("'video.ykv'文件不存在，请检查当前目录下是否有'video.ykv'文件！！！", err.Error())
+		PrintLicenseNotice()
+		return
 	}
 
 	// 2、解码原ykv文件获取所有视频分片二级制数据
 	offsets := findFtypOffsets(data)
 	if len(offsets) == 0 {
 		fmt.Println("未找到任何 ftyp 片段")
+		PrintLicenseNotice()
 		return
 	}
 	fmt.Printf("共发现 %d 个 MP4 分片\n", len(offsets))
@@ -72,7 +75,9 @@ func main() {
 	//listFile, err := os.Create(filelistPath)
 	listFile, err := os.Create(*filelistPath)
 	if err != nil {
-		panic(err)
+		fmt.Println("视频分片记录文件创建失败，请检测本工具是否对当前文件夹有写权限！！！", err.Error())
+		PrintLicenseNotice()
+		return
 	}
 	defer listFile.Close()
 
@@ -86,7 +91,9 @@ func main() {
 		mp4Files = append(mp4Files, data[start:end])
 		err := os.WriteFile(filename, data[start:end], 0644)
 		if err != nil {
-			panic(err)
+			fmt.Println("视频分片失败，请检测本工具是否对当前文件夹有写权限！！！", err.Error())
+			PrintLicenseNotice()
+			return
 		}
 
 		fmt.Printf("✅ 提取 %s 成功，大小：%d 字节\n", filename, end-start)
@@ -95,7 +102,9 @@ func main() {
 		// 写入到 filelist.txt
 		_, err = listFile.WriteString(fmt.Sprintf("file '%s'\n", filename))
 		if err != nil {
-			panic(err)
+			fmt.Println("视频分片文件记录失败，请检测本工具是否对当前文件夹有写权限！！！", err.Error())
+			PrintLicenseNotice()
+			return
 		}
 	}
 
@@ -108,12 +117,6 @@ func main() {
 
 	PrintLicenseNotice()
 
-	fmt.Println("程序执行完毕，按 Enter 键退出...")
-
-	// 强制阻塞读取控制台输入
-	reader := bufio.NewReader(os.Stdin)
-	_, _ = reader.ReadString('\n')
-
 }
 
 // PrintLicenseNotice 打印源码版权声明到控制台
@@ -124,6 +127,7 @@ func PrintLicenseNotice() {
 		BoldRed = "\033[1;31m"
 		Reset   = "\033[0m"
 	)
+	fmt.Println("程序执行完毕，按 Enter 键退出...")
 	fmt.Println("\n\n\n")
 
 	fmt.Println(BoldRed + "📜 源码版权声明\n" + Reset)
@@ -144,6 +148,10 @@ func PrintLicenseNotice() {
 	fmt.Println(BoldRed + "具体内容详见 LICENSE 文件。" + Reset)
 
 	fmt.Println("\n\n\n")
+
+	// 强制阻塞读取控制台输入
+	reader := bufio.NewReader(os.Stdin)
+	_, _ = reader.ReadString('\n')
 }
 
 // 读取每一个视频分片
@@ -176,10 +184,12 @@ func mergeMultMp4(mp4Files [][]byte, listFileName string, outputFile string, ffm
 	// 检测是否有mp4文件
 	if len(mp4Files) == 0 {
 		log.Printf("当前目录未找到任何 *.mp4 数据")
+		PrintLicenseNotice()
 		return
 	}
 	if ffmpegBinPath == "" {
 		log.Printf("未读取到ffmpeg的bin目录地址，ffmpegBinPath = %s，无法执行文件合并操作！！！\n", ffmpegBinPath)
+		PrintLicenseNotice()
 		return
 	}
 
@@ -195,6 +205,7 @@ func mergeMultMp4(mp4Files [][]byte, listFileName string, outputFile string, ffm
 	err := cmd.Run()
 	if err != nil {
 		log.Printf("ffmpeg 执行失败: %v", err)
+		PrintLicenseNotice()
 	}
 
 	fmt.Printf("合并完成，输出文件：%s\n", outputFile)
